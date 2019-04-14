@@ -1,0 +1,40 @@
+#Inverz fgv módszer általánosan
+
+#1. álltás Exp(lambda)
+n<-1000
+lambda<-2
+rexp(n, rate=lambda)
+
+x<-dexp(rexp(n, rate=lambda), rate=lambda)
+plot(1:n,x)
+hist(x)
+
+#1. állítás: norm(mean,sd)
+n<-1000
+m<-2
+s<-1
+rnorm(n,m,s)
+ par(mfrow=c(1,2))
+plot(1:n,dnorm(rnorm(n,m,s)))
+hist(dnorm(rnorm(n,m,s)),freq=F)
+
+#2. állítás exp(lambda)
+m<-1000
+lambda<-2
+runif(n)
+hist(qexp(runif(n),rate=lambda),freq=F)
+points(seq(0,4,0.05),dexp(seq(0,4,0.05),rate=lambda), type="l", col="red")
+
+x<-qexp(runif(n),rate=lambda)
+y<-qexp(runif(n),rate=lambda)
+plot(x,y)
+
+#2. állítás: Cauchy(1,s)
+n<-1000
+l<-0
+s<-1
+runif(n)
+x<-qcauchy(runif(n),location=1,scale=s)
+y<-x[x>-10 & x<10]
+hist(y,freq=F)
+points(seq(-10,10,0.05),dcauchy(seq(-10,10,0.05),location=l,scale=s),type="l", col="red")

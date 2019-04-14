@@ -1,0 +1,165 @@
+typeof(4)
+?typeof #help
+
+x<-5 #értékadás
+ls #változók listája
+rm(x) #remove
+
+x<-c(2,4,6,8);x #x numerikus vektor készítése
+y<-c("alma");y #y karakter vektor készítése
+z<-c(T,F,F,T);z #z logikai vektor készítése
+
+length(x) #hossz
+
+a<-c(1,2+3, exp(3),.5^2);a #függvényt és számológépként is üzemel
+b<-c(0,x,2*x);b #vektorok összefûzése
+
+
+#Sorozat létrehozáse
+1:10 #kezdõérték:végérték
+
+#seq(from= ,to= ,by= ||length.out= )
+#length.out= //x elemet helyez el a vektorba és meghatározza a lépõ számot
+
+seq(1,10,1) #defaultban "by= "-t használ // elhagyhatók a szavak
+
+sequence(6) #1-tõl egyesével az adott számig lépeget
+sequence(c(4,6)) #2 sorozatot csinál, egyszer 4ig utána 6ig
+
+#rep(érték, times= || each=)
+rep(2,times=3) #ismétel
+rep(2,each=3) 
+
+rep(1:4,times=3) #sorozatot ismétel
+rep(1:4,each=3) #sorozat számait ismétli elemenként
+rep(1:4,3) #default: times=
+rep(1:4,4:1)
+
+#hivatkozás
+x[2] #elemre való hivatkozás (x vektor 2.eleme)
+x[2] <-20 #értékadás
+x[-2] #kihagyja a 2. koordinátá, a többit kiírja
+
+#beépített függvények pl: mean(c(2,4,6))
+sum()
+prod() #faktoriális, elemek összeszorzása
+min()
+max()
+mean() #átlag
+median() #minta középsõ értéke
+var() #szórás négyzet
+sd() #d négyzet || szórás || var négyzetgyöke
+sqrt() #négyzetgyök
+exp()
+log() #természetes alap logaritmus
+abs() #abszolút érték
+sin()
+cos()
+tan()
+
+x<-1:10;x
+round(c(sum=sum(x),prod=prod(x),min=min(x),max=max(x),mean=mean(x),median=median(x),var=var(x),sd=sd(x)),2)
+
+
+#2. Mátrixok
+x<-1:8
+dim(x)<-c(2,4)
+
+
+#mátrix(értékek, nrow= ,ncol= ,/byrow=TRUE/)
+
+A<-matrix(1:8,nrow=2,ncol=4);A
+B<-matrix(1:8,nrow=2,ncol=4, byrow= TRUE);B
+
+A<-matrix(1:8,2,4);A
+A<-matrix(1:8,2);A
+A<-matrix(1:8,5);A
+
+A<-matrix(c(1,0,3,-1,2,4),2);A
+
+cbind() #oszloponként
+rbind() #soronként
+
+cbind(c(1,2,3),c(4,5,6))
+rbind(c(1,2,3),c(4,5,6))
+
+cbind(1,1:4)
+cbind(1,1:2,5:8)#csak egész számú többszörösre mûködik
+
+A<-matrix(1:9,3,byrow=TRUE);A
+B<-cbind(c(-21,-11,7),A,c(1,2,0));B
+C<-rbind(c(1,0,2),A,c(1));C
+
+#Mûveletek
+X<-matrix(1:8,2,4);X
+X^2 #elemenkénti szorzás
+
+x<-matrix(1:4,2)
+y<-5:6
+x*y #elemenkénti szorzás
+
+x%*%y #a jó mátrix szorzás / hagyományos
+x%*%x #mátrix önmagával való szorzása
+
+t() #transzponálás
+solve() #mátrix inverze
+
+x%*%solve(x) #egységmátrix
+
+#Hivatkozások
+A[3] #oszlopfolytonos 3.elem
+A[2,3] #2.sor, 3.oszlop
+
+A[c(2,3),2]
+A[c(2,3),c(1,2)]
+A[-1,-3]
+
+A[,2] #teljes 2.oszlop
+A[2,] #teljes 2.sor
+
+#egyéb függvények
+diag() #diagonális mátrix
+ncol() #oszlopok száma
+nrow() #sorok száma
+dim()
+
+#apply(mátrix,1:sor vagy 2:oszlop, függvény)	
+apply(A,1,sum)
+apply(A,2,mean)
+
+#3.Tömb
+x<-1:8
+dim(x)<-c(2,2,2)
+
+#array(data= ,dim= )
+array(1:12,c(2,2,3))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
