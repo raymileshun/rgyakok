@@ -1,0 +1,121 @@
+# ==================
+# Zárthelyi
+# Varga Dániel, DVJYP8
+# ==================
+
+### 1. feladat
+dvjyp8.i_gen_numbers <- function(n, a) {
+	if (a <= 0 || a >= 1) {
+		print('a-nak 0 es 1 között kell lennie!')
+		break
+	}
+
+	X = matrix(0, ncol = 1, nrow = n)
+	X[,1] <- (runif(n, 0, 1) ^ a)
+
+	return(X)
+}
+
+dvjyp8.i_examine_distribution <- function(a) {
+	num1 = dvjyp8.i_gen_numbers(10000, a)
+	num2 = runif(10000, 0, 1) ^ a
+
+	par(mfrow = c(1, 2))
+	hist(num1, main = "10.000 véletlen szám generálása", freq = FALSE)
+	hist(num2, main = "R runif függvény számai a-ra emelve", freq = FALSE)
+	par(mfrow = c(1, 1))
+}
+
+### 2. feladat
+
+dvjyp8.ii_gen_numbers <- function(n) {
+	egyik = runif(10000, 0, 5)
+	masik = runif(10000, 0, 5)
+}
+
+### 3. feladat
+
+iii_evek = seq(1, 10)
+iii_bizt = c(90, 100, 120, 150, 160, 180, 200, 190, 180, 200)
+
+dvjyp8.iii_linear <- function(age) {
+	regr = lm(iii_bizt ~ iii_evek)
+	forecast <- coefficients(regr)
+
+	# Ennyi biztosítást köt az 'age' éves dolgozó
+	forecast[1] + forecast[2] * age
+}
+
+dvjyp8.iii_logarhythm <- function(age) {
+	regr = lm(iii_bizt ~ iii_evek)
+	forecast <- coefficients(regr)
+
+	# Ennyi biztosítást köt az 'age' éves dolgozó
+	forecast[1] + forecast[2] * log(age)
+}
+
+dvjyp8.iii_compare <- function() {
+	regr <- lm(iii_bizt ~ iii_evek)
+	forecast <- coefficients(regr)
+
+	plot(iii_bizt ~ iii_evek, main = "Biztosítások", xlab = "Évek", ylab = "Biztosítások")
+	abline(regr, col = "darkred")
+
+	# Az eredeti korok megbecslése a megkapott funkciókkal:
+	linevek <- forecast[2] * iii_evek + forecast[1]
+	logevek <- forecast[2] * log(iii_evek) + forecast[1] 
+
+	# Ezek felrajzolása a gráfra
+	points(iii_evek, linevek, col = "blue")
+	points(iii_evek, logevek, col = "green")
+
+	# Összehasonlítás
+	difflin <- sum(iii_bizt - linevek)
+	difflog <- sum(iii_bizt - logevek)
+
+	if (difflin < difflog) {
+		print('A linearis modell illeszkedik jobban az adatokra.')
+	}  else if (difflog < difflin) {
+		print('A logaritmikus modell illeszkedik jobban az adatokra.')
+	} else {
+		print('Mindketto egyforman illeszkedik az adatokra.')
+	}
+}
+
+### 4. feladat
+
+install.packages('quadprog')
+library(quadprog)
+
+iv_data <- matrix(0, nrow = 2, ncol = 5)
+iv_data[1,] <- c(0.13, 0.12, 0.15, 0.11, 0.17)
+iv_data[2,] <- c(0.24, 0.41, 0.27, 0.16, 0.33)
+r <- mean(iv_data[1,])
+
+dvjyp8.iv_portfolio <- function(data, r) {
+	n <- ncol(data)
+	Dmat <- cov(data)
+	dvec <- rep(0, times = n)
+	Amat <- cbind(data[1,], 1, diag(n))
+	bvec <- c(r, 1, rep(0, times = n))
+	meq <- 2
+
+	portfolio <- solve.QP(Dmat, dvec, Amat, bvec, meq)
+	weights <- portfolio$solution
+
+	list(weights = weights, risk = portfolio$value, return = r)
+}
+
+dvjyp8.iv_decide_investment <- function() {
+	portfolio <- dvjyp8.iv_portfolio(iv_data, r)
+
+	weights <- portfolio$weights * 100
+	names(weights) <- c("A", "B", "C", "D", "E")
+	sum(weights)
+
+	Weights <- weights[weights > 0]
+	pie(Weights)
+
+	r_opt <- r
+	kockazat_opt <- sqrt(portfolio$weights %*% cov(data) %*% portfolio$weights)
+}
