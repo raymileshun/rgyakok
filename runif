@@ -1,0 +1,9 @@
+fos<-floor(runif(1000,1,101));fos
+hist(fos)
+
+r<-sample(1:100,1000,replace=TRUE);r
+hist(r)
+
+
+
+
